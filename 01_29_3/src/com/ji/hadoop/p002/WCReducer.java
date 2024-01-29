@@ -1,0 +1,72 @@
+package com.ji.hadoop.p002;
+
+import java.io.IOException;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Reducer;
+
+// Hadoop 작업 두 번째 단계 : Combine
+// 두 번째 단계는 알아서 처리됨!
+
+// Hadoop 작업 세 번째 단계 : Reduce
+// 	in : sleepy <1,1,1>
+//	out : sleepy 3		>> 인자 뒤의 두자리
+
+// 인자 앞의 두자리는 Mapper쪽 뒤의 두자리와 같아야 함.
+public class WCReducer extends Reducer<Text, IntWritable, Text, IntWritable>{
+	
+	private static final IntWritable SUM = new IntWritable();
+	
+	// sleepy <1,1,1> 한 세트 만날 때마다 호출할 method
+	@Override
+	protected void reduce(Text arg0,	// map 단계에서 해준 key 값 : sleepy
+			Iterable<IntWritable> arg1,	// list 비스무리한 : <1,1,1>
+			Reducer<Text, IntWritable, Text, IntWritable>.Context arg2)	// 결과 처리 용도
+					throws IOException, InterruptedException {
+		
+		
+		if(arg0.toString().contains("조조") || arg0.toString().contains("맹덕")) {		
+			
+			int sum = 0;
+			for (IntWritable i : arg1) {
+				
+				sum += i.get();
+			
+			}		
+			
+			SUM.set(sum);
+			arg2.write(arg0, SUM);
+			
+			
+		}else if(arg0.toString().contains("유비") || arg0.toString().contains("현덕")) {		
+
+			int sum = 0;
+			for (IntWritable i : arg1) {
+				
+				sum += i.get();
+			
+			}
+			
+			SUM.set(sum);
+			arg2.write(arg0, SUM);
+			
+		
+		}else if(arg0.toString().contains("손권") || arg0.toString().contains("중모")) {		
+
+			int sum = 0;
+			for (IntWritable i : arg1) {
+				
+				sum += i.get();
+			
+			}
+			
+			SUM.set(sum);
+			arg2.write(arg0, SUM);	
+							
+		}
+		
+
+	}
+
+}

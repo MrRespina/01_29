@@ -1,0 +1,47 @@
+HDFS 확인
+	bin/hadoop fs -ls /
+
+HDFS로 업로드
+	bin/hadoop fs -put 파일명.확장자 HDFS경로
+	bin/hadoop fs -put texts.txt /
+
+실행
+	bin/hadoop jar 파일명.jar
+
+
+
+WCMain2 실행 > library로 만든 후에 > NN에 넣어서 > 실행
+
+
+bin/hadoop jar 파일명.jar /분석할파일명 /결과폴더명
+
+bin/hadoop jar WC_2.jar /texts.txt /hResult
+
+
+실행하면 결과폴더/part-r-00000 로 결과 만들어줌.
+
+결과 파일 가져오기
+	bin/hadoop fs -get HDFS에 있는 무언가를 NN의 어디로
+	bin/hadoop fs -get /hResult/part-r-00000 hResult.txt
+
+============================================
+
+삼국지 1~10권
+유비(현덕),조조(맹덕),손권(중모) 언급 횟수 카운트 하는 프로그램 제작
+	> Hadoop 실행으로 결과 뽑기
+	> RStudio 에서 barplot,pie 언급횟수 차트 나타낼 것
+
+분석용 파일을 HDFS 최상위로 업로드
+	bin/hadoop fs -put tk* / (tk* : tk로 시작하는 것 전부)
+
+
+==============================================
+
+21~23 년 버스 데이터를 가지고
+요일별 승차인원 + 하차인원 수 구하기
+그래프로 표현(barplot,pie)(일 월 화 수 목 금 토 순서)
+
+월 ~ 금 마다 버스를 타고 출근을 하는데 유독 목요일마다 사람이 많은 것 처럼 느껴져서 정말 그런 지 알아보고자 함.
+요일별 승차 인원 + 하차 인원 구해서
+R + JS Matplotlib으로 그래프 뽑아서 결과를 봤더니,
+내 결과가 맞았더라 ~ 다른 요일이 더 많더라. 라는 결론을 지을 수 있는 미니 빅데이터 프로젝트 로도 활용 가능.
